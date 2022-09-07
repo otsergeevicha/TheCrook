@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -5,45 +6,54 @@ using UnityEngine.Serialization;
 public class AlarmSystem : MonoBehaviour
 {
     [HideInInspector] private MeshRenderer _alarm;
-    [HideInInspector] private AudioSource _audioAlarm;
+    [HideInInspector] private AudioSource _alarmSound;
+    [SerializeField] private Home _triggerHome;
     
     private float _maxVolume = 1;
     private float _rateStep = .1f;
-    private Coroutine _coroutine;
+    private float _volumeChangeTime = 1;
+    private Coroutine _jobAlarm;
 
     private void Awake()
     {
         _alarm = GetComponent<MeshRenderer>();
-        _audioAlarm = GetComponent<AudioSource>();
+        _alarmSound = GetComponent<AudioSource>();
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnEnable()
     {
-        if (collision.TryGetComponent<Player>(out Player player))
-        {
-            _coroutine = StartCoroutine(WorkAlarm());
-            _alarm.material.color = Color.red;
-        }
+        _triggerHome.Penetration += StartAlarm;
+        _triggerHome.Leaving += StopAlarm;
+    }
+
+    private void OnDisable()
+    {
+        _triggerHome.Penetration -= StartAlarm;
+        _triggerHome.Leaving -= StopAlarm;
     }
     
-    private void OnTriggerExit(Collider collision)
+    private IEnumerator WorkAlarm()
     {
-        if (collision.TryGetComponent<Player>(out Player player))
+        _alarmSound.Play();
+
+        while (_alarmSound.volume != _maxVolume)
         {
-            StopCoroutine(_coroutine);
-            _alarm.material.color = Color.green;
-            _audioAlarm.Stop();
+            _alarmSound.volume = Mathf.MoveTowards(_alarmSound.volume, _maxVolume, _rateStep);
+            yield return new WaitForSeconds(_volumeChangeTime);
         }
     }
 
-    private IEnumerator WorkAlarm()
+    private void StartAlarm()
     {
-        _audioAlarm.Play();
+        _jobAlarm = StartCoroutine(WorkAlarm());
+        _alarm.material.color = Color.red;
+    }
 
-        while (_audioAlarm.volume != _maxVolume)
-        {
-            _audioAlarm.volume = Mathf.MoveTowards(_audioAlarm.volume, _maxVolume, _rateStep);
-            yield return new WaitForSeconds(1f);
-        }
+    private void StopAlarm()
+    {
+        StopCoroutine(_jobAlarm);
+        _alarmSound.volume = 0;
+        _alarm.material.color = Color.green;
+        _alarmSound.Stop();
     }
 }

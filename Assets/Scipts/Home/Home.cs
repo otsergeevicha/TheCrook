@@ -1,29 +1,24 @@
+using System;
 using UnityEngine;
 
 public class Home : MonoBehaviour
 {
-    [SerializeField] private Door _door;
+    public event Action Penetration;
+    public event Action Leaving;
 
-
-    private void OnEnable()
+    private void OnTriggerEnter(Collider collision)
     {
-        _door.Opened += OpenDoor;
-        _door.Closed += CloseDoor;
+        if (collision.TryGetComponent<Player>(out Player player))
+        {
+            Penetration?.Invoke();
+        }
     }
 
-    private void OnDisable()
+    private void OnTriggerExit(Collider collision)
     {
-        _door.Opened -= OpenDoor;
-        _door.Closed -= CloseDoor;
-    }
-
-    private void OpenDoor()
-    {
-        _door.Open();
-    }
-
-    private void CloseDoor()
-    {
-        _door.Close();
+        if (collision.TryGetComponent<Player>(out Player player))
+        {
+            Leaving?.Invoke();
+        }
     }
 }

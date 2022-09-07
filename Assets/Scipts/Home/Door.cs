@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    public event Action Opened;
-    public event Action Closed;
-
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.TryGetComponent<Player>(out Player player))
         {
-            Opened?.Invoke();
+            transform.position = new Vector3(.85f, 3.5f, transform.position.z);
         }
     }
 
@@ -19,17 +16,7 @@ public class Door : MonoBehaviour
     {
         if (collision.TryGetComponent<Player>(out Player player))
         {
-            Closed?.Invoke();
+            transform.position = new Vector3(0.85f,1.5f, transform.position.z);
         }
-    }
-
-    public void Open()
-    {
-        transform.position = new Vector3(.85f, 3.5f, transform.position.z);
-    }
-
-    public void Close()
-    {
-        transform.position = new Vector3(0.85f,1.5f, transform.position.z);
     }
 }

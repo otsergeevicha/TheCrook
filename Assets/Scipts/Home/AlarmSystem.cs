@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
+[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(AudioSource))]
 
 public class AlarmSystem : MonoBehaviour
 {
@@ -35,14 +37,15 @@ public class AlarmSystem : MonoBehaviour
     private IEnumerator WorkAlarm()
     {
         _alarmSound.Play();
+        var waitForSeconds = new WaitForSeconds(_volumeChangeTime);
 
         while (_alarmSound.volume != _maxVolume)
         {
             _alarmSound.volume = Mathf.MoveTowards(_alarmSound.volume, _maxVolume, _rateStep);
-            yield return new WaitForSeconds(_volumeChangeTime);
+            yield return waitForSeconds;
         }
     }
-
+    
     private void StartAlarm()
     {
         _jobAlarm = StartCoroutine(WorkAlarm());

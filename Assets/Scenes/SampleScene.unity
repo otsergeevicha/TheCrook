@@ -513,7 +513,6 @@ GameObject:
   - component: {fileID: 901632181}
   - component: {fileID: 901632180}
   - component: {fileID: 901632179}
-  - component: {fileID: 901632178}
   - component: {fileID: 901632177}
   m_Layer: 0
   m_Name: AlarmSystem
@@ -534,19 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a43a1502f66612a4fa51bb0654e026a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &901632178
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 901632176}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 6.33669, y: 1, z: 6.619745}
-  m_Center: {x: -2.668345, y: 0, z: 0.0421412}
+  _triggerHome: {fileID: 1763152211}
 --- !u!82 &901632179
 AudioSource:
   m_ObjectHideFlags: 0
@@ -880,8 +867,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 20, y: 0.5, z: 20}
-  m_Children:
-  - {fileID: 1763152212}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1214,6 +1200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1763152212}
   - component: {fileID: 1763152211}
+  - component: {fileID: 1763152213}
   m_Layer: 0
   m_Name: Home
   m_TagString: Untagged
@@ -1233,7 +1220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb5897d25aa14d4d8714fccede3893f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _door: {fileID: 1692847187}
 --- !u!4 &1763152212
 Transform:
   m_ObjectHideFlags: 0
@@ -1242,8 +1228,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1763152210}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
-  m_LocalScale: {x: 0.05, y: 2, z: 0.05}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2056137938}
   - {fileID: 1935350979}
@@ -1251,9 +1237,22 @@ Transform:
   - {fileID: 108922836}
   - {fileID: 768590570}
   - {fileID: 1692847186}
-  m_Father: {fileID: 981942152}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1763152213
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763152210}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.6382384, y: 1.7501473, z: 6.551318}
+  m_Center: {x: 4.31221, y: 1.5036862, z: -0.39965296}
 --- !u!1 &1935350978
 GameObject:
   m_ObjectHideFlags: 0

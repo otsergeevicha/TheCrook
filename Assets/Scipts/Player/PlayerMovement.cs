@@ -34,7 +34,5 @@ public class PlayerMovement : MonoBehaviour
         {
             _rigidbody.AddForce(-_speed * Time.deltaTime, 0, 0, ForceMode.Impulse);
         }
-
-        Console.WriteLine("ello");
     }
 }
